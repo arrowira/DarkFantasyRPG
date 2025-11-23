@@ -110,4 +110,3 @@ func _on_walk_timer_timeout() -> void:
 		StepSound2.pitch_scale = randf_range(0.9, 1.1) 
 		StepSound2.play()
 	WTimeSet = false
-	print("step")
