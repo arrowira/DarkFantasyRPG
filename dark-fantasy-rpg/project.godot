@@ -11,5 +11,6 @@ config_version=5
 [application]
 
 config/name="DarkFantasyRPG"
+run/main_scene="uid://b5o2jc4gm3fue"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
