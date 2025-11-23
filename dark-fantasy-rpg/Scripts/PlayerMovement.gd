@@ -103,11 +103,11 @@ func _on_walk_timer_timeout() -> void:
 	var R = randi_range(0, 2)
 	if(R == 1):
 		StepSound.volume_db = randf_range(0.5, 1.5) 
-		StepSound.pitch_scale = randf_range(0.8, 1.2) 
+		StepSound.pitch_scale = randf_range(0.9, 1.1) 
 		StepSound.play()
 	else:
 		StepSound2.volume_db = randf_range(0.5, 1.5) 
-		StepSound2.pitch_scale = randf_range(0.8, 1.2) 
+		StepSound2.pitch_scale = randf_range(0.9, 1.1) 
 		StepSound2.play()
 	WTimeSet = false
 	print("step")
