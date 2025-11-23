@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5o2jc4gm3fue"]
+[gd_scene load_steps=7 format=3 uid="uid://b5o2jc4gm3fue"]
 
 [ext_resource type="PackedScene" uid="uid://h3rweylpaqkv" path="res://Scenes/Player.tscn" id="1_r150o"]
 [ext_resource type="Texture2D" uid="uid://cc0b2kjbdj5xv" path="res://Textures/Grass-min.jpg" id="2_idj7w"]
@@ -9,6 +9,14 @@ albedo_texture = ExtResource("2_idj7w")
 [sub_resource type="BoxMesh" id="BoxMesh_r150o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_r150o"]
+
+[sub_resource type="Environment" id="Environment_idj7w"]
+background_mode = 1
+background_color = Color(0, 0.16489169, 0.42416343, 1)
+fog_light_color = Color(0, 0.16470589, 0.42352942, 1)
+fog_height_density = -0.1
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0, 0.16470589, 0.42352942, 1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -98,3 +106,6 @@ shape = SubResource("BoxShape3D_r150o")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.52184355, 0.8530412, 0, -0.8530412, 0.52184355, 0, 9.504418, 6.0265527)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_idj7w")

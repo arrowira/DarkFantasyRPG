@@ -50,7 +50,8 @@ func _physics_process(delta: float) -> void:
 	if(Input.is_action_pressed("Jump") && Jump == true):
 		velocity.y+=JumpVelocity
 		Jump = false
-		
+	
+	#Make crouch modify hitbox
 	if(Input.is_action_pressed("Crouch")):
 		Crouched = true
 		Camera.position.y = DefCameraHeight-1
