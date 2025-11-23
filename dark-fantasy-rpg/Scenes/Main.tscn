@@ -17,14 +17,83 @@ albedo_texture = ExtResource("2_idj7w")
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66848636, -0.34614336)
 
-[node name="Ground" type="MeshInstance3D" parent="."]
+[node name="GroundContainer" type="Node" parent="."]
+
+[node name="Ground" type="MeshInstance3D" parent="GroundContainer"]
 transform = Transform3D(14.494624, 0, 0, 0, 1, 0, 0, 0, 18.329693, 0, -2.3781414, 0)
 material_override = SubResource("StandardMaterial3D_kln2b")
 mesh = SubResource("BoxMesh_r150o")
+skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+[node name="StaticBody3D" type="StaticBody3D" parent="GroundContainer/Ground"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundContainer/Ground/StaticBody3D"]
+shape = SubResource("BoxShape3D_r150o")
+
+[node name="Ground5" type="MeshInstance3D" parent="GroundContainer"]
+transform = Transform3D(14.494624, 0, 0, 0, 1, 0, 0, 0, 18.329693, 0, -0.39284658, 30.93919)
+material_override = SubResource("StandardMaterial3D_kln2b")
+mesh = SubResource("BoxMesh_r150o")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GroundContainer/Ground5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundContainer/Ground5/StaticBody3D"]
+shape = SubResource("BoxShape3D_r150o")
+
+[node name="Ground4" type="MeshInstance3D" parent="GroundContainer"]
+transform = Transform3D(14.494624, 0, 0, 0, 1, 0, 0, 0, 18.329693, 0, -2.3781414, -17.613876)
+material_override = SubResource("StandardMaterial3D_kln2b")
+mesh = SubResource("BoxMesh_r150o")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GroundContainer/Ground4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundContainer/Ground4/StaticBody3D"]
+shape = SubResource("BoxShape3D_r150o")
+
+[node name="Ground7" type="MeshInstance3D" parent="GroundContainer"]
+transform = Transform3D(14.494624, 0, 0, 0, 1, 0, 0, 0, 18.329693, -13.101822, -2.3781414, -17.613876)
+material_override = SubResource("StandardMaterial3D_kln2b")
+mesh = SubResource("BoxMesh_r150o")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GroundContainer/Ground7"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundContainer/Ground7/StaticBody3D"]
+shape = SubResource("BoxShape3D_r150o")
+
+[node name="Ground3" type="MeshInstance3D" parent="GroundContainer"]
+transform = Transform3D(14.43089, -0.09367391, 0, 1.357768, 0.9956029, 0, 0, 0, 18.329693, -11.739877, -3.0075796, 0.56734467)
+material_override = SubResource("StandardMaterial3D_kln2b")
+mesh = SubResource("BoxMesh_r150o")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GroundContainer/Ground3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundContainer/Ground3/StaticBody3D"]
+shape = SubResource("BoxShape3D_r150o")
+
+[node name="Ground2" type="MeshInstance3D" parent="GroundContainer"]
+transform = Transform3D(14.494624, 0, 0, 0, 0.9868416, 2.963727, 0, -0.16168994, 18.088503, 0, -1.767266, 13.791828)
+material_override = SubResource("StandardMaterial3D_kln2b")
+mesh = SubResource("BoxMesh_r150o")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GroundContainer/Ground2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundContainer/Ground2/StaticBody3D"]
+shape = SubResource("BoxShape3D_r150o")
+
+[node name="Ground6" type="MeshInstance3D" parent="GroundContainer"]
+transform = Transform3D(14.494624, 0, 0, 0, 0.9868416, 2.963727, 0, -0.16168994, 18.088503, -14.374151, -1.767266, 13.791828)
+material_override = SubResource("StandardMaterial3D_kln2b")
+mesh = SubResource("BoxMesh_r150o")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GroundContainer/Ground6"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundContainer/Ground6/StaticBody3D"]
 shape = SubResource("BoxShape3D_r150o")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
