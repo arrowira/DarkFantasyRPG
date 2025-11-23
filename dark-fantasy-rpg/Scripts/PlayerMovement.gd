@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-var PlayerSpeed = 1
+var PlayerSpeed = 0.5
 
 var Jump = false
 var JumpVelocity = 2
@@ -9,6 +9,9 @@ var JumpSlowMod = 0.5
 var Gravity = 0
 var Grounded = false
 var Friction = 0.9
+
+var SprintMod = 1.4
+var Sprint = 1
 
 var MouseSense = 0.005
 var CamPitch = 0
@@ -22,11 +25,16 @@ func _physics_process(delta: float) -> void:
 	var InputDir = Input.get_vector("Left","Right", "Forward", "Backward")
 	var Dir = (transform.basis * Vector3(InputDir.x, 0, InputDir.y)).normalized()
 	if(Grounded == true):
-		velocity+=Dir*PlayerSpeed
+		velocity+=Dir*(PlayerSpeed * SprintMod)
 	else:
 		velocity+=Dir*(PlayerSpeed*JumpSlowMod)
 	velocity.x*=Friction
 	velocity.z*=Friction
+	
+	if(Input.is_action_pressed("Sprint") && Grounded == true):
+		Sprint = SprintMod
+	else:
+		Sprint = 1
 	
 	if(Input.is_action_pressed("Jump") && Jump == true):
 		velocity.y+=JumpVelocity
