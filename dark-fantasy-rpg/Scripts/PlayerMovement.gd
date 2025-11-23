@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-var PlayerSpeed = 0.5
+var PlayerSpeed = 0.8
 
 var Jump = false
 var JumpVelocity = 2
@@ -15,23 +15,34 @@ var Sprint = 1
 
 var MouseSense = 0.005
 var CamPitch = 0
+var DefCameraHeight = 0
+
+var Crouched = false
+var CrouchedFallMod = 1.5
+var CrouchedSpeedMod = 0.5
+
 @onready var Camera = $Camera3D
+
+#Player moves slow when crouced, when crouched in the air the player doesnt move at all but fall faster 
+#When sprinting the player moves faster on ground but not in the air. The player cannot spring while crouched
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	Gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+	#Should be the Cameras local poisiton
+	DefCameraHeight = Camera.position.y
 
 func _physics_process(delta: float) -> void:
 	var InputDir = Input.get_vector("Left","Right", "Forward", "Backward")
 	var Dir = (transform.basis * Vector3(InputDir.x, 0, InputDir.y)).normalized()
 	if(Grounded == true):
-		velocity+=Dir*(PlayerSpeed * SprintMod)
-	else:
+		velocity+=Dir*(PlayerSpeed * Sprint * CrouchedSpeedMod)
+	elif Crouched != true:
 		velocity+=Dir*(PlayerSpeed*JumpSlowMod)
 	velocity.x*=Friction
 	velocity.z*=Friction
 	
-	if(Input.is_action_pressed("Sprint") && Grounded == true):
+	if(Input.is_action_pressed("Sprint") && Grounded == true && Crouched == false):
 		Sprint = SprintMod
 	else:
 		Sprint = 1
@@ -40,9 +51,19 @@ func _physics_process(delta: float) -> void:
 		velocity.y+=JumpVelocity
 		Jump = false
 		
+	if(Input.is_action_pressed("Crouch")):
+		Crouched = true
+		Camera.position.y = DefCameraHeight-1
+	else:
+		Crouched = false
+		Camera.position.y = DefCameraHeight
+		
 	#Make a custom function later, will detect if on top of enemies or something else as is on floor as well
 	if(!is_on_floor()):
-		velocity.y-=(Gravity*0.01)
+		if(Crouched == false):
+			velocity.y-=(Gravity*0.01)
+		else:
+			velocity.y-=(Gravity*0.01)*CrouchedFallMod
 		Jump = false
 		Grounded = false
 	else:
