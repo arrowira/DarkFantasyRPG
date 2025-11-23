@@ -16,12 +16,16 @@ var Sprint = 1
 var MouseSense = 0.005
 var CamPitch = 0
 var DefCameraHeight = 0
+@onready var Camera = $Camera3D
 
 var Crouched = false
 var CrouchedFallMod = 1.5
 var CrouchedSpeedMod = 0.5
 
-@onready var Camera = $Camera3D
+@onready var StepSound = $StepSound
+@onready var StepSound2 = $StepSound2
+@onready var WalkTimer = $WalkTimer
+var WTimeSet = false
 
 #Player moves slow when crouced, when crouched in the air the player doesnt move at all but fall faster 
 #When sprinting the player moves faster on ground but not in the air. The player cannot spring while crouched
@@ -35,6 +39,20 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var InputDir = Input.get_vector("Left","Right", "Forward", "Backward")
 	var Dir = (transform.basis * Vector3(InputDir.x, 0, InputDir.y)).normalized()
+	
+	#This is not very well coded
+	if(Dir != Vector3.ZERO && Grounded == true):
+		if(WTimeSet == false):
+			StepSound.play()
+			WalkTimer.stop()
+			WalkTimer.wait_time = 1.8-(PlayerSpeed * Sprint * CrouchedSpeedMod)*2
+			WalkTimer.start()
+			WTimeSet = true
+	else:
+		WalkTimer.stop()
+		if(Dir == Vector3.ZERO or Grounded == false):
+			WTimeSet = false
+		
 	if(Grounded == true):
 		velocity+=Dir*(PlayerSpeed * Sprint * CrouchedSpeedMod)
 	elif Crouched != true:
@@ -80,3 +98,16 @@ func _input(event):
 		CamPitch -= event.relative.y * MouseSense
 		CamPitch = clamp(CamPitch, deg_to_rad(-90), deg_to_rad(90))
 		Camera.rotation.x = CamPitch
+		
+func _on_walk_timer_timeout() -> void:
+	var R = randi_range(0, 2)
+	if(R == 1):
+		StepSound.volume_db = randf_range(0.5, 1.5) 
+		StepSound.pitch_scale = randf_range(0.8, 1.2) 
+		StepSound.play()
+	else:
+		StepSound2.volume_db = randf_range(0.5, 1.5) 
+		StepSound2.pitch_scale = randf_range(0.8, 1.2) 
+		StepSound2.play()
+	WTimeSet = false
+	print("step")
