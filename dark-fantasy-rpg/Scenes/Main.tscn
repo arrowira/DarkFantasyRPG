@@ -104,8 +104,10 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GroundContainer/Ground6/StaticBody3D"]
 shape = SubResource("BoxShape3D_r150o")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.52184355, 0.8530412, 0, -0.8530412, 0.52184355, 0, 9.504418, 6.0265527)
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_idj7w")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5218436, 0.85304123, 0, -0.85304123, 0.5218436, 0, 35.276165, 62.57685)
+light_energy = 2.0
+light_specular = 2.0
