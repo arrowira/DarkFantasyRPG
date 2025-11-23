@@ -1,8 +1,11 @@
 extends CharacterBody3D
 
 var PlayerSpeed = 1
+
 var Jump = false
 var JumpVelocity = 2
+var JumpSlowMod = 0.5
+
 var Gravity = 0
 var Grounded = false
 var Friction = 0.9
@@ -21,7 +24,7 @@ func _physics_process(delta: float) -> void:
 	if(Grounded == true):
 		velocity+=Dir*PlayerSpeed
 	else:
-		velocity+=Dir*(PlayerSpeed*0.6)
+		velocity+=Dir*(PlayerSpeed*JumpSlowMod)
 	velocity.x*=Friction
 	velocity.z*=Friction
 	
@@ -37,7 +40,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		Jump = true
 		Grounded = true
-	
+		
 	move_and_slide()
 	
 #No idea how this functions works. I just copied it.

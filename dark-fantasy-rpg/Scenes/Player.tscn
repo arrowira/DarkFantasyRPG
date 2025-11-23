@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://h3rweylpaqkv"]
+[gd_scene load_steps=5 format=3 uid="uid://h3rweylpaqkv"]
 
 [ext_resource type="Script" uid="uid://cvy57y0nmvtpr" path="res://Scripts/PlayerMovement.gd" id="1_rpqav"]
 
@@ -6,8 +6,13 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_rpqav"]
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kyqiw"]
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_rpqav")
+
+[node name="LookDir" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5821194, -0.7340088)
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_qbkls")
@@ -15,3 +20,7 @@ shape = SubResource("CapsuleShape3D_qbkls")
 [node name="Body" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_rpqav")
 skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.13586639, 0, 0, 0, -0.009548455, 0.1582381, 0, -0.3517381, -0.00429561, 0.43928495, 0.31420216, -0.48791033)
+mesh = SubResource("CapsuleMesh_kyqiw")
