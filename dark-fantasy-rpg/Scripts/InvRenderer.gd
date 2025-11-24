@@ -5,9 +5,9 @@ var SelSlot = preload("res://Scenes/SelectedItemSlot.tscn")
 var IScript
 var R = false
 
-var OInv
 var Open = false
 var SlotObj = []
+var HBSlotObj = []
 
 var SelectedSlot = 0
 var SelectedItem = null
@@ -19,10 +19,9 @@ func _physics_process(delta: float) -> void:
 	#has to ready after the inventory script is loaded so put it a frame after
 	if(R == false):
 		IScript = get_node("/root/Node3D/Player/InventoryManager")
-		OInv = IScript.Inv
 		var Pos = Vector2(0, 0)
 		var Dist = 64
-		for i in range(OInv.size()):
+		for i in range(IScript.InvSize):
 			if(Pos.x == 8*Dist):
 				Pos.y+=Dist
 				Pos.x=0
@@ -31,29 +30,55 @@ func _physics_process(delta: float) -> void:
 			NSlot.global_position = Pos
 			add_child(NSlot)
 			SlotObj.append(NSlot)
+		Pos = Vector2(256, 512)
+		for i in range(IScript.HotbarSize):
+			Pos.x +=Dist
+			var NSlot = InvSlot.instantiate()
+			NSlot.global_position = Pos
+			add_child(NSlot)
+			HBSlotObj.append(NSlot)
 		R = true
-	OInv = IScript.Inv #Remeber to update this every frame
+	#make it try to put items back in your invetory beore dropping them when they are dragged out when the inventory is closed
 	if(Input.is_action_just_pressed("OpenInventory")):
 		Open = !Open
+		if(SelectedItem != null):
+			for i in range(SelectedItem.Amt):
+				IScript.SpawnItem(SelectedItem, get_node("/root/Node3D/Player").global_position+Vector3.FORWARD*2+(Vector3.UP)*(i+1))
+			SelectedItem = null
+			SSObj.queue_free()
+			SSObj = null
+		ToUpdate = true
+	var l = 0
 	for child in get_children():
+		l+=1
 		child.visible = Open
-	
+		if(l==IScript.InvSize):
+			break
+	DrawInvetory()
 	
 	if(Open == true):
-		DrawInvetory()
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
 		var MPos = get_viewport().get_mouse_position()
 		var INI = 0
+		SelectedSlot = -1
 		for i in range(SlotObj.size()):
 			if(SlotObj[i].get_node("Slot").get_global_rect().has_point(MPos)):
 				INI = 1
-				SlotObj[SelectedSlot].get_node("Slot").modulate = Color(1, 1, 1)
 				SelectedSlot = i
+				SlotObj[SelectedSlot].get_node("Slot").modulate = Color(0.7, 0.7, 0.7)
+			else:
+				SlotObj[i].get_node("Slot").modulate = Color(1, 1, 1)
+		if(INI == 0):
+			for i in range(HBSlotObj.size()):
+				if(HBSlotObj[i].get_node("Slot").get_global_rect().has_point(MPos)):
+					INI = 1
+					SelectedSlot = IScript.InvSize + i
+					HBSlotObj[SelectedSlot-IScript.InvSize].get_node("Slot").modulate = Color(0.7, 0.7, 0.7)
+				else:
+					HBSlotObj[i].get_node("Slot").modulate = Color(1, 1, 1)
 		if(INI == 0):
 			SelectedSlot = -1
-		if(SelectedSlot != -1):
-			SlotObj[SelectedSlot].get_node("Slot").modulate = Color(0.7, 0.7, 0.7)
 		
 		if(SelectedItem != null && SelectedItem.Amt == 0):
 			SelectedItem = null
@@ -62,7 +87,7 @@ func _physics_process(delta: float) -> void:
 			ToUpdate = true
 		
 		#Pickup item from slot if the player doesnt have any selected items
-		if(Input.is_action_just_pressed("LeftClick") && SelectedSlot != -1 && OInv[SelectedSlot].Name != "Empty" && SelectedItem == null):
+		if(Input.is_action_just_pressed("LeftClick") && SelectedSlot != -1 && IScript.Inv[SelectedSlot].Name != "Empty" && SelectedItem == null):
 			print("ITEM PICKED UP")
 			SelectedItem = IScript.Inv[SelectedSlot]
 			IScript.Inv[SelectedSlot] = ITEMLIST.ITEM_ARRAY[0]
@@ -121,14 +146,25 @@ func _physics_process(delta: float) -> void:
 	
 func DrawInvetory():
 	if(ToUpdate == true):
-		for i in range(OInv.size()):
-			SlotObj[i].get_node("Slot/Tex").texture = null
-			SlotObj[i].get_node("Slot/Amount").text = str("0")
-		for i in range(OInv.size()):
-			if(OInv[i].Name != "Empty"):
-				SlotObj[i].get_node("Slot/Tex").texture = load(OInv[i].TextPath)
-				SlotObj[i].get_node("Slot/Tex").scale = Vector2(48, 48)/SlotObj[i].get_node("Slot/Tex").texture.get_size()
-				SlotObj[i].get_node("Slot/Amount").text = str(OInv[i].Amt)
+		if(Open == true):
+			for i in range(IScript.InvSize):
+				SlotObj[i].get_node("Slot/Tex").texture = null
+				SlotObj[i].get_node("Slot/Amount").text = str("0")
+				SlotObj[i].get_node("Slot").modulate = Color(1, 1, 1)
+			for i in range(IScript.InvSize):
+				if(IScript.Inv[i].Name != "Empty"):
+					SlotObj[i].get_node("Slot/Tex").texture = load(IScript.Inv[i].TextPath)
+					SlotObj[i].get_node("Slot/Tex").scale = Vector2(48, 48)/SlotObj[i].get_node("Slot/Tex").texture.get_size()
+					SlotObj[i].get_node("Slot/Amount").text = str(IScript.Inv[i].Amt)
+		for i in range(IScript.HotbarSize):
+			HBSlotObj[i].get_node("Slot/Tex").texture = null
+			HBSlotObj[i].get_node("Slot/Amount").text = str("0")
+			HBSlotObj[i].get_node("Slot").modulate = Color(1, 1, 1)
+		for i in range(IScript.HotbarSize):
+			if(IScript.Inv[IScript.InvSize + i].Name != "Empty"):
+				HBSlotObj[i].get_node("Slot/Tex").texture = load(IScript.Inv[IScript.InvSize + i].TextPath)
+				HBSlotObj[i].get_node("Slot/Tex").scale = Vector2(48, 48)/HBSlotObj[i].get_node("Slot/Tex").texture.get_size()
+				HBSlotObj[i].get_node("Slot/Amount").text = str(IScript.Inv[IScript.InvSize + i].Amt)
 	ToUpdate = false
 	if(SelectedItem != null):
 		SSObj.get_node("Tex").texture = load(SelectedItem.TextPath)

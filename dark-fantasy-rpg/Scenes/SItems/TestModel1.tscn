@@ -10,7 +10,8 @@ size = Vector3(1.9875488, 1.9582672, 1.9990234)
 [node name="ItemBody" type="RigidBody3D" parent="."]
 
 [node name="ItemModel" parent="ItemBody" instance=ExtResource("1_xg6a1")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 
 [node name="ItemCollider" type="CollisionShape3D" parent="ItemBody"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00012207031, 0.0038070679, -0.0034179688)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0.00012207031, 0.0038070679, -0.0034179688)
 shape = SubResource("BoxShape3D_xg6a1")

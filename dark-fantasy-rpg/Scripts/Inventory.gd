@@ -1,11 +1,12 @@
 extends Node3D
 
-var InvSize = 32
+var InvSize = 32 
+var HotbarSize = 6
 var Inv = []
 
 func _ready() -> void:
-	Inv.resize(InvSize)
-	for i in range(InvSize):
+	Inv.resize(InvSize+HotbarSize)
+	for i in range(InvSize+HotbarSize):
 		Inv[i] = Item.new()
 	Inv[0] = ITEMLIST.ADDITEM(1, 6)
 	Inv[1] = ITEMLIST.ADDITEM(1, 5)
