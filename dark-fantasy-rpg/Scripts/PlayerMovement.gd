@@ -27,6 +27,9 @@ var CrouchedSpeedMod = 0.5
 @onready var WalkTimer = $WalkTimer
 var WTimeSet = false
 
+var SelectedHBSlot = -1
+var HBSlotModel
+
 #Player moves slow when crouced, when crouched in the air the player doesnt move at all but fall faster 
 #When sprinting the player moves faster on ground but not in the air. The player cannot spring while crouched
 
@@ -89,6 +92,40 @@ func _physics_process(delta: float) -> void:
 		Jump = true
 		Grounded = true
 		
+	var PSS = SelectedHBSlot
+	#probably better way to do this
+	if(Input.is_key_pressed(KEY_1)):
+		if(SelectedHBSlot == 1):
+			SelectedHBSlot = -1
+		else:
+			SelectedHBSlot = 1
+	if(Input.is_key_pressed(KEY_2)):
+		if(SelectedHBSlot == 2):
+			SelectedHBSlot = -1
+		else:
+			SelectedHBSlot = 2
+	if(Input.is_key_pressed(KEY_3)):
+		if(SelectedHBSlot == 3):
+			SelectedHBSlot = -1
+		else:
+			SelectedHBSlot = 3
+	if(Input.is_key_pressed(KEY_4)):
+		if(SelectedHBSlot == 4):
+			SelectedHBSlot = -1
+		else:
+			SelectedHBSlot = 4
+	if(Input.is_key_pressed(KEY_5)):
+		if(SelectedHBSlot == 5):
+			SelectedHBSlot = -1
+		else:
+			SelectedHBSlot = 5
+	if(Input.is_key_pressed(KEY_6)):
+		if(SelectedHBSlot == 6):
+			SelectedHBSlot = -1
+		else:
+			SelectedHBSlot = 6
+	#If something changed redraw what the player is holding
+	#DrawHBItem()
 	move_and_slide()
 	
 #No idea how this functions works. I just copied it.
@@ -110,3 +147,10 @@ func _on_walk_timer_timeout() -> void:
 		StepSound2.pitch_scale = randf_range(0.9, 1.1) 
 		StepSound2.play()
 	WTimeSet = false
+	
+#func DrawHBItem():
+	#if($InventoryManager.Inv[$InventoryManager.InvSize+SelectedHBSlot].Name != "Empty"):
+		#var PS = load($InventoryManager.Inv[$InventoryManager.InvSize+SelectedHBSlot].ScenePath)
+		#HBSlotModel = PS.instantiate()
+		#HBSlotModel.position = $Arm/HandPoint
+		#add_child(HBSlotModel)

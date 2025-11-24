@@ -48,6 +48,7 @@ func _physics_process(delta: float) -> void:
 			SSObj.queue_free()
 			SSObj = null
 		ToUpdate = true
+	#Still draw hotbar just not inventory
 	var l = 0
 	for child in get_children():
 		l+=1

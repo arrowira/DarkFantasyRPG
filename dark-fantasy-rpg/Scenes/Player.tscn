@@ -21,6 +21,9 @@ shape = SubResource("CapsuleShape3D_qbkls")
 mesh = SubResource("CapsuleMesh_rpqav")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Arm" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.13586639, 0, 0, 0, -0.009548455, 0.1582381, 0, -0.3517381, -0.00429561, 0.43928495, 0.31420216, -0.48791033)
 mesh = SubResource("CapsuleMesh_kyqiw")
+
+[node name="HandPoint" type="Node3D" parent="Arm"]
+transform = Transform3D(1, 0, 0, 0, 1.0000002, 1.8626451e-09, 0, 3.7252903e-09, 1, 0, 0.81624615, 0.18829846)
