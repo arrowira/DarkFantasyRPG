@@ -7,7 +7,8 @@ func _ready() -> void:
 	Inv.resize(InvSize)
 	for i in range(InvSize):
 		Inv[i] = Item.new()
-
+	Inv[0] = Item.new("Square", 10, load("res://Textures/TestImage.png"), "Cube", 2)
+	
 func PickupItem(NItem):
 	for i in range (Inv.size()):
 		if(Inv[i].name == NItem.name && Inv[i].Amt + NItem.Amt <= Inv[i].StackSize):

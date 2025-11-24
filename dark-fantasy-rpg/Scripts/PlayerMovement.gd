@@ -93,7 +93,7 @@ func _physics_process(delta: float) -> void:
 	
 #No idea how this functions works. I just copied it.
 func _input(event):
-	if(event is InputEventMouseMotion):
+	if(event is InputEventMouseMotion && get_node("/root/Node3D/Canvas/InventoryRenderer").Open == false):
 		rotate_y(-event.relative.x * MouseSense)
 		CamPitch -= event.relative.y * MouseSense
 		CamPitch = clamp(CamPitch, deg_to_rad(-90), deg_to_rad(90))

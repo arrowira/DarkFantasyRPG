@@ -126,9 +126,9 @@ environment = SubResource("Environment_idj7w")
 transform = Transform3D(1, 0, 0, 0, 0.5218436, 0.85304123, 0, -0.85304123, 0.5218436, 0, 35.276165, 62.57685)
 light_energy = 2.0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="Canvas" type="CanvasLayer" parent="."]
 
-[node name="InventoryRenderer" type="Node3D" parent="CanvasLayer"]
+[node name="InventoryRenderer" type="Node3D" parent="Canvas"]
 script = ExtResource("6_v1gob")
 
 [connection signal="timeout" from="Player/WalkTimer" to="Player" method="_on_walk_timer_timeout"]
