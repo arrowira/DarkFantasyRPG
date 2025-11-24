@@ -8,6 +8,8 @@ var OInv
 var Open = false
 var SlotObj = []
 
+var SelectedSlot = 0
+
 func _physics_process(delta: float) -> void:
 	#has to ready after the inventory script is loaded so put it a frame after
 	if(R == false):
@@ -31,16 +33,25 @@ func _physics_process(delta: float) -> void:
 	for child in get_children():
 		child.visible = Open
 	
+	
 	if(Open == true):
 		DrawInvetory()
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		
+		var MPos = get_viewport().get_mouse_position()
+		for i in range(SlotObj.size()):
+			if(SlotObj[i].get_node("Slot").get_global_rect().has_point(MPos)):
+				SlotObj[SelectedSlot].get_node("Slot").modulate = Color(1, 1, 1)
+				SelectedSlot = i
+		SlotObj[SelectedSlot].get_node("Slot").modulate = Color(0.7, 0.7, 0.7)
+		
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		
 func DrawInvetory():
 	for i in range(OInv.size()):
 		if(OInv[i].Name != "Empty"):
-			SlotObj[i].get_node("Slot/Tex").texture = OInv[i].Tex
+			SlotObj[i].get_node("Slot/Tex").texture = load(OInv[i].TextPath)
 			SlotObj[i].get_node("Slot/Tex").scale = Vector2(48, 48)/SlotObj[i].get_node("Slot/Tex").texture.get_size()
 			SlotObj[i].get_node("Slot/Amount").text = str(OInv[i].Amt)
 			

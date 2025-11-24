@@ -89,6 +89,8 @@ func _physics_process(delta: float) -> void:
 		Jump = true
 		Grounded = true
 		
+	if(Input.is_action_just_pressed("TestKey1")):
+		$InventoryManager.SpawnItem(ITEMLIST.ITEM_ARRAY[0], global_position)	
 	move_and_slide()
 	
 #No idea how this functions works. I just copied it.

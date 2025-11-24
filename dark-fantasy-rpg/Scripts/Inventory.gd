@@ -7,7 +7,7 @@ func _ready() -> void:
 	Inv.resize(InvSize)
 	for i in range(InvSize):
 		Inv[i] = Item.new()
-	Inv[0] = Item.new("Square", 10, load("res://Textures/TestImage.png"), "Cube", 2)
+	Inv[0] = ITEMLIST.ITEM_ARRAY[0]
 	
 func PickupItem(NItem):
 	for i in range (Inv.size()):
@@ -32,5 +32,8 @@ func DropItem(Slot):
 	RemoveItem(Slot)
 
 func SpawnItem(NItem, Pos):
-	#code to spawn the item in the world
+	var M = load(NItem.ScenePath)
+	var NI = M.instantiate()
+	NI.position = Pos
+	get_node("/root/Node3D").add_child(NI)
 	return
