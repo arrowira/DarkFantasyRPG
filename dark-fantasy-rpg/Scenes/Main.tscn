@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5o2jc4gm3fue"]
+[gd_scene load_steps=11 format=3 uid="uid://b5o2jc4gm3fue"]
 
 [ext_resource type="PackedScene" uid="uid://h3rweylpaqkv" path="res://Scenes/Player.tscn" id="1_r150o"]
 [ext_resource type="Texture2D" uid="uid://cc0b2kjbdj5xv" path="res://Textures/Grass-min.jpg" id="2_idj7w"]
 [ext_resource type="AudioStream" uid="uid://c67md5oulfhs7" path="res://Audio/GrassSteps.mp3" id="2_kln2b"]
 [ext_resource type="AudioStream" uid="uid://dqcsvfps6vt52" path="res://Audio/GrassSteps2.mp3" id="3_rgh2o"]
+[ext_resource type="Script" uid="uid://d3mgnmbpi3noy" path="res://Scripts/Inventory.gd" id="4_pbw6q"]
+[ext_resource type="Script" uid="uid://c8b6mdwqieipo" path="res://Scripts/InvRenderer.gd" id="6_v1gob"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kln2b"]
 albedo_texture = ExtResource("2_idj7w")
@@ -34,6 +36,9 @@ stream = ExtResource("2_kln2b")
 
 [node name="StepSound2" type="AudioStreamPlayer3D" parent="Player"]
 stream = ExtResource("3_rgh2o")
+
+[node name="InventoryManager" type="Node3D" parent="Player"]
+script = ExtResource("4_pbw6q")
 
 [node name="GroundContainer" type="Node" parent="."]
 
@@ -120,5 +125,10 @@ environment = SubResource("Environment_idj7w")
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5218436, 0.85304123, 0, -0.85304123, 0.5218436, 0, 35.276165, 62.57685)
 light_energy = 2.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="InventoryRenderer" type="Node3D" parent="CanvasLayer"]
+script = ExtResource("6_v1gob")
 
 [connection signal="timeout" from="Player/WalkTimer" to="Player" method="_on_walk_timer_timeout"]

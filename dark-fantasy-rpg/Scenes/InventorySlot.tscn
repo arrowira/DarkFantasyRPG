@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dlm66orc2yfxo"]
+
+[node name="InventorySlot" type="Node2D"]
+
+[node name="Slot" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Tex" type="Sprite2D" parent="Slot"]
+position = Vector2(3, 3)
+
+[node name="Amount" type="RichTextLabel" parent="Slot"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 19.0
+offset_right = 69.0
+offset_bottom = 59.0
+text = "0"
