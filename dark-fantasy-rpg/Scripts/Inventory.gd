@@ -7,7 +7,10 @@ func _ready() -> void:
 	Inv.resize(InvSize)
 	for i in range(InvSize):
 		Inv[i] = Item.new()
-	Inv[0] = ITEMLIST.ITEM_ARRAY[0]
+	Inv[0] = ITEMLIST.ADDITEM(1, 6)
+	Inv[1] = ITEMLIST.ADDITEM(1, 5)
+	Inv[2] = ITEMLIST.ADDITEM(2, 10)
+	Inv[3] = ITEMLIST.ADDITEM(2, 18)
 	
 func PickupItem(NItem):
 	for i in range (Inv.size()):

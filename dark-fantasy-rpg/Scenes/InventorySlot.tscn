@@ -5,6 +5,7 @@
 [node name="Slot" type="Panel" parent="."]
 offset_right = 64.0
 offset_bottom = 64.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Tex" type="Sprite2D" parent="Slot"]
 texture_filter = 1
@@ -17,3 +18,4 @@ offset_top = 43.0
 offset_right = 91.0
 offset_bottom = 83.0
 text = "0"
+metadata/_edit_use_anchors_ = true

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://djp3mphkwo6v4"]
+
+[ext_resource type="PackedScene" uid="uid://b4s3dvaop8nw8" path="res://Models/TestModel2.blend" id="1_8gpkb"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8gpkb"]
+height = 1.9806824
+radius = 0.99316406
+
+[node name="TestModel2" type="Node3D"]
+
+[node name="ItemBody" type="RigidBody3D" parent="."]
+
+[node name="ItemModel" parent="ItemBody" instance=ExtResource("1_8gpkb")]
+
+[node name="ItemCollider" type="CollisionShape3D" parent="ItemBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.014785767, 0)
+shape = SubResource("CylinderShape3D_8gpkb")
